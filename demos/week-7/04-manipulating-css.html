@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <style>
+            .message {
+                padding: 1em;
+                border: 1px solid black;
+                border-radius: 5px;
+                background-color: lightgray;
+            }
+
+            .message-success {
+                background-color: lightgreen;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="message"></div>
+
+        <script>
+            const messageEl = document.querySelector( '.message' );
+
+            // innerHTML
+            messageEl.innerHTML = `
+                <strong>Success</strong>
+                <br />
+                The message has been sent.
+            `;
+
+            messageEl.classList.add( 'message-success' );
+
+            messageEl.style.fontSize = '2em';
+        </script>
+    </body>
+</html>

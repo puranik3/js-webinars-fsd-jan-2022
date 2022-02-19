@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <button>Button 1</button>
+        <button>Button 2</button>
+        
+        <section>
+            <button>Button 1 within section</button>
+            <button>Button 2 within section</button>
+        </section>
+
+        <script>
+            const firstButton = document.querySelector( 'button' );
+            const allButtons = document.querySelectorAll( 'button' );
+
+            console.log( firstButton );
+            console.log( allButtons );
+
+            const section = document.querySelector( 'section' );
+            console.log( section.querySelectorAll( 'button' ) );
+        </script>
+    </body>
+</html>

@@ -1,0 +1,17 @@
+.grid {
+    width: 480px;
+    margin: 1em auto;
+}
+
+.grid-row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin: 15px;
+}
+
+.grid-cell {
+    flex: 0 0 150px;
+    height: 150px;
+    background-color: gold;
+}

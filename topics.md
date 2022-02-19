@@ -1,4 +1,4 @@
-# Topics covered during the week
+# Topics covered during week 6
 
 1. Function Hoisting
 2. Variable Hoisting
