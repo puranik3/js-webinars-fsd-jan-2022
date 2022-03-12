@@ -1,0 +1,16 @@
+## Topics in Week 9
+- Introduction to Typescript - Agenda
+- What is typescript?
+- Advantages of typescript
+- Disadvantages of typescript
+- Introduction to Typescript - Summary
+- Basic Concepts around Typescript - Agenda
+- Declaration of variables
+- Data types in typescript
+- Understand scope
+- Basic Concepts around Typescript - Summary
+- Classes and Interfaces in Typescript - Agenda
+- Classes in typescript
+- Interfaces in typescript
+- What are Access modifiers?
+- Classes and Interfaces in Typescript - Summary

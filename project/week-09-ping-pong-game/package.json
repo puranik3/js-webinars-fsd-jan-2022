@@ -1,0 +1,21 @@
+{
+  "name": "week-09-ping-pong-game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "postbuild": "node set-extension.js",
+    "start": "http-server -c-1",
+    "watch": "tsc --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "filehound": "^1.17.5",
+    "http-server": "^14.1.0",
+    "typescript": "^4.6.2"
+  }
+}
