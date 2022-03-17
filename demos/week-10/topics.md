@@ -1,0 +1,19 @@
+## Topics covered in Week 10
+- React - Introduction
+- React - Features
+- Create React App
+- React CSS
+- React - Pros and Cons
+- React Vs Angular
+- JSX and TSX
+- React Fragment
+- React Component
+- React Component - Implementation
+- React Props
+- React State
+- Constructor
+- Conditional Rendering
+- React Events
+- Controlled and Uncontrolled Components
+- List, Map, and Key
+- React Refs
