@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <style>
+            .message {
+                border: 1px solid navy;
+            }
+
+            .message-title,
+            .message-body {
+                padding: 1em;
+            }
+
+            .message-title {
+                color: white;
+                background-color: navy;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="root"></div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/17.0.2/umd/react.development.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/17.0.2/umd/react-dom.development.min.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.1/axios.min.js"></script>
+
+        <script type="text/babel">
+            const MessageTitle = React.memo(( { title, toggle } ) => {
+                return (
+                    <div className="message-title" onClick={toggle}>{title}</div>
+                );
+            });
+           
+            const MessageBody = ( { body, show } ) => {
+                return show ? (
+                    <div className="message-body">{body}</div>
+                ) : null;
+            }
+
+            const Message = ( { title, body } ) => {
+                const [ show, setShow ] = React.useState( true );
+
+                // local function (local to Message)
+                // gets created each time Message function runs (i.e. renders)
+                // const toggle = () => {
+                //     setShow( s => !s );
+                // };
+                
+                // useCallback prevents a new toggle function from being created every time Message renders
+                const toggle = React.useCallback(() => {
+                    setShow( s => !s );
+                }, [ setShow ]);
+
+                return (
+                    <div className="message">
+                        <MessageTitle title={title} toggle={toggle} />
+                        <MessageBody body={body} show={show} />
+                    </div>
+                );
+            }
+
+            ReactDOM.render( 
+                <Message title="What is React?" body="It is a UI library by Facebook">
+                </Message>,
+                document.getElementById( 'root' )
+            );
+        </script>
+    </body>
+</html>

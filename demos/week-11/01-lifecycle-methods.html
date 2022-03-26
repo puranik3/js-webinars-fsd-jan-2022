@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <div id="root"></div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/17.0.2/umd/react.development.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/17.0.2/umd/react-dom.development.min.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.1/axios.min.js"></script>
+
+        <script type="text/babel">
+            class WorkshopsList extends React.Component {
+                state = {
+                    status: 'FETCHING',
+                    workshops: [],
+                    page: 1,
+                    error: null
+                };
+
+                nextPage = () => {
+                    this.setState({
+                        page: this.state.page + 1
+                    });
+
+                    console.log( this.state.page ); // page has not changed yet
+                };
+
+                render() {
+                    const { status, workshops, page, error } = this.state;
+
+                    return (
+                        <React.Fragment>
+                            {
+                                status === 'FETCHING' && (
+                                    <div>Workshops are being fetched</div>
+                                )
+                            }
+                            {
+                                status === 'FETCHED' && (
+                                    <React.Fragment>
+                                        <button onClick={this.nextPage}>Next page</button>
+                                        <ul>
+                                            {
+                                                workshops.map(
+                                                    workshop => {
+                                                        return <li key={workshop.id}>{workshop.name}</li>
+                                                    }
+                                                )
+                                            }
+                                        </ul>
+                                    </React.Fragment>
+                                )
+                            }
+                            {
+                                status === 'ERROR' && (
+                                    <div>{error.message}</div>
+                                )
+                            }
+                        </React.Fragment>
+                    );
+                }
+
+                async fetchWorkshops() {
+                    this.setState({
+                        status: 'FETCHING'
+                    });
+
+                    try {
+                        const response = await axios.get( `http://workshops-server.herokuapp.com/workshops?_page=${this.state.page}` );
+                        console.log( response.data );
+
+                        this.setState({
+                            status: 'FETCHED',
+                            workshops: response.data
+                        });
+                    } catch( error ) {
+                        this.setState({
+                            status: 'ERROR',
+                            error
+                        });
+                    }
+                }
+
+                // is called after the first render
+                async componentDidMount() { 
+                    this.fetchWorkshops();
+                }
+
+                // called after every state / prop update
+                componentDidUpdate(prevProps, prevState) {
+                    console.log( 'old page is ', prevState.page ); // old page number
+                    console.log( 'new page is ', this.state.page ); // new page number
+
+                    if( prevState.page !== this.state.page ) {
+                        this.fetchWorkshops();
+                    }
+                }
+
+                // before component goes off the screen
+                componentWillUnmount() {
+                    console.log( 'componentWillUnmount' );
+                }
+            }
+
+            ReactDOM.render( <WorkshopsList />, document.getElementById( 'root' ) );
+
+            setTimeout(() => {
+                ReactDOM.render( <div>Bye!</div>, document.getElementById( 'root' ) );
+            }, 10000);
+        </script>
+    </body>
+</html>

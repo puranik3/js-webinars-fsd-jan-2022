@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <div id="root"></div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/17.0.2/umd/react.development.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/17.0.2/umd/react-dom.development.min.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.1/axios.min.js"></script>
+
+        <script type="text/babel">
+            const WorkshopsList = () => {
+                const [ status, setStatus ] = React.useState( 'FETCHING' );
+                const [ workshops, setWorkshops ] = React.useState( [] );
+                const [ page, setPage ] = React.useState( 1 );
+                const [ error, setError ] = React.useState( null );
+
+                const nextPage = () => {
+                    setPage( page + 1 );
+                };
+
+                const fetchWorkshops = async () => {
+                    setStatus( 'FETCHING' );
+
+                    try {
+                        const response = await axios.get( `http://workshops-server.herokuapp.com/workshops?_page=${page}` );
+
+                        setWorkshops( response.data );
+                        setStatus( 'FETCHED' );
+                    } catch( error ) {
+                        setError( error );
+                        setStatus( 'ERROR' );
+                    }
+                }
+
+                // is called after the first render
+                // the effect is executed after first load (mount), and also after re-render
+                React.useEffect(() => { // "effect function"
+                    fetchWorkshops();
+                }, [ page ]);
+
+                // this effect should be run only on component mount
+                React.useEffect(() => {
+                    console.log( 'effect that runs ONLY on the first render' );
+                }, []);
+
+                // called after every state / prop update
+                // componentDidUpdate(prevProps, prevState) {
+                //     console.log( 'old page is ', prevState.page ); // old page number
+                //     console.log( 'new page is ', this.state.page ); // new page number
+
+                //     if( prevState.page !== this.state.page ) {
+                //         this.fetchWorkshops();
+                //     }
+                // }
+
+                return (
+                    <React.Fragment>
+                        {
+                            status === 'FETCHING' && (
+                                <div>Workshops are being fetched</div>
+                            )
+                        }
+                        {
+                            status === 'FETCHED' && (
+                                <React.Fragment>
+                                    <button onClick={nextPage}>Next page</button>
+                                    <ul>
+                                        {
+                                            workshops.map(
+                                                workshop => {
+                                                    return <li key={workshop.id}>{workshop.name}</li>
+                                                }
+                                            )
+                                        }
+                                    </ul>
+                                </React.Fragment>
+                            )
+                        }
+                        {
+                            status === 'ERROR' && (
+                                <div>{error.message}</div>
+                            )
+                        }
+                    </React.Fragment>
+                );
+            }
+
+            ReactDOM.render( <WorkshopsList />, document.getElementById( 'root' ) );
+        </script>
+    </body>
+</html>
