@@ -16,9 +16,9 @@ import TodoComponent from "./TodoComponent.jsx";
 
 class TodoApp extends Component {
     render() {
+        const HeaderComponentWithNavigation = withNavigation( HeaderComponent );
         const LoginComponentWithNavigation = withNavigation( LoginComponent );
         const WelcomeComponentWithParams = withParams( WelcomeComponent );
-        const HeaderComponentWithNavigation = withNavigation( HeaderComponent );
         const TodoComponentWithParamsAndNavigation = withParams( withNavigation( TodoComponent ) );
         const ListTodosComponentWithNavigation = withNavigation( ListTodosComponent );
 

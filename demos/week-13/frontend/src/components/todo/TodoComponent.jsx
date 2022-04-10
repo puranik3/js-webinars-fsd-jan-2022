@@ -37,6 +37,7 @@ class TodoComponent extends Component {
 
     validate(values) {
         let errors = {};
+
         if (!values.description) {
             errors.description = "Enter a Description";
         } else if (values.description.length < 5) {
@@ -59,7 +60,7 @@ class TodoComponent extends Component {
             targetDate: values.targetDate,
         };
 
-        if (this.state.id === -1) {
+        if (this.state.id === '-1') {
             TodoDataService.createTodo(username, todo).then(() =>
                 this.props.navigate("/todos")
             ); //REACT6
